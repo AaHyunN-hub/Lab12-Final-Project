@@ -22,10 +22,8 @@
 
 | Application | URL |
 |-------------|-----|
-| **Personal Website** | [http://localhost:8080](http://localhost:8080) (本地) / *部署后更新* |
-| **Todo App** | [http://localhost:8081](http://localhost:8081) (本地) / *部署后更新* |
-
-> ⚠️ **部署后请将实际 URL 替换到上方表格和 `website/index.html` 中的链接！**
+| **Personal Website** | [http://100.58.157.39:8080](http://100.58.157.39:8080) |
+| **Todo App** | [http://100.58.157.39:8081](http://100.58.157.39:8081) |
 
 ---
 
