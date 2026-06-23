@@ -1,0 +1,222 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    color: #e0e0e0;
+    min-height: 100vh;
+    line-height: 1.7;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 24px;
+}
+
+/* ===== 头像 ===== */
+.hero {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.avatar-wrapper {
+    width: 160px;
+    height: 160px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid #7c3aed;
+    box-shadow: 0 0 30px rgba(124, 58, 237, 0.4);
+    transition: transform 0.3s;
+}
+
+.avatar-wrapper:hover {
+    transform: scale(1.05);
+}
+
+.avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* ===== 名字 ===== */
+.name {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+}
+
+.en-name {
+    font-weight: 400;
+    color: #a78bfa;
+    font-size: 1.6rem;
+}
+
+.alias {
+    font-size: 1.2rem;
+    color: #c4b5fd;
+    margin-bottom: 8px;
+}
+
+.student-id {
+    font-size: 1rem;
+    color: #9ca3af;
+    margin-bottom: 12px;
+}
+
+.student-id strong {
+    color: #fbbf24;
+}
+
+.school {
+    font-size: 0.95rem;
+    color: #9ca3af;
+    line-height: 1.6;
+}
+
+.major {
+    color: #a78bfa;
+    font-weight: 600;
+}
+
+.divider {
+    color: #4b5563;
+    margin: 0 8px;
+}
+
+/* ===== 通用区块 ===== */
+.section {
+    margin-bottom: 48px;
+}
+
+.section h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #c4b5fd;
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(124, 58, 237, 0.3);
+}
+
+.section p {
+    margin-bottom: 12px;
+    color: #d1d5db;
+}
+
+/* ===== 卡片网格 ===== */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(124, 58, 237, 0.2);
+    border-radius: 16px;
+    padding: 24px 16px;
+    text-align: center;
+    transition: all 0.3s;
+    backdrop-filter: blur(4px);
+}
+
+.card:hover {
+    background: rgba(124, 58, 237, 0.15);
+    border-color: #7c3aed;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(124, 58, 237, 0.2);
+}
+
+.card-icon {
+    font-size: 2.4rem;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.card h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #e0e0e0;
+    margin-bottom: 8px;
+}
+
+.card p {
+    font-size: 0.85rem;
+    color: #9ca3af;
+    margin-bottom: 0;
+}
+
+/* ===== 技能条 ===== */
+.skill-bar {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 12px;
+}
+
+.skill-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #7c3aed, #a78bfa);
+    border-radius: 4px;
+    transition: width 1s ease;
+}
+
+/* ===== 链接按钮 ===== */
+.links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.link-btn {
+    display: inline-block;
+    padding: 14px 28px;
+    background: linear-gradient(135deg, #7c3aed, #6d28d9);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s;
+    flex: 1;
+    text-align: center;
+    min-width: 200px;
+}
+
+.link-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
+}
+
+.todo-btn {
+    background: linear-gradient(135deg, #059669, #047857);
+}
+
+.todo-btn:hover {
+    box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
+}
+
+.hint {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-top: 12px !important;
+}
+
+/* ===== 页脚 ===== */
+.footer {
+    text-align: center;
+    padding-top: 32px;
+    border-top: 1px solid rgba(124, 58, 237, 0.15);
+    color: #6b7280;
+    font-size: 0.9rem;
+}

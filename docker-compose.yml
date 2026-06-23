@@ -1,0 +1,26 @@
+# ============================================
+# Docker Compose — 部署个人网站 + Todo 应用
+# ============================================
+
+version: "3.9"
+
+services:
+  # ---------- 1. 个人网站 ----------
+  personal-site:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: personal-site
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+
+  # ---------- 2. Todo 应用（开源） ----------
+  todo-app:
+    build:
+      context: ./todo-app
+      dockerfile: Dockerfile
+    container_name: todo-app
+    ports:
+      - "8081:80"
+    restart: unless-stopped

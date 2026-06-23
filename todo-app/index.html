@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>📋 Todo App - Open Source</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="todo-container">
+        <h1>📋 Todo App</h1>
+        <p class="subtitle">Open Source · Vanilla JS</p>
+
+        <div class="input-row">
+            <input type="text" id="todoInput" placeholder="What needs to be done?" autofocus />
+            <button id="addBtn">+ Add</button>
+        </div>
+
+        <div class="filters">
+            <button class="filter active" data-filter="all">All</button>
+            <button class="filter" data-filter="active">Active</button>
+            <button class="filter" data-filter="completed">Completed</button>
+        </div>
+
+        <ul id="todoList"></ul>
+
+        <div class="footer-bar">
+            <span id="itemCount">0 items left</span>
+            <button id="clearBtn">Clear Completed</button>
+        </div>
+    </div>
+
+    <footer class="credit">
+        <p>Built with ❤️ · Based on TodoMVC open source project</p>
+        <p><a href="https://github.com/tastejs/todomvc" target="_blank">github.com/tastejs/todomvc</a></p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
