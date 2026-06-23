@@ -1,128 +1,168 @@
-// ============================================
-// Todo App - Vanilla JavaScript
-// Open Source · Inspired by TodoMVC
-// ============================================
+// Todo App - Simple version
 
-// ----- State -----
-let todos = JSON.parse(localStorage.getItem('todos')) || [];
-let currentFilter = 'all';
+var todos = [];
+var filter = 'all';
 
-// ----- DOM Refs -----
-const todoInput = document.getElementById('todoInput');
-const addBtn = document.getElementById('addBtn');
-const todoList = document.getElementById('todoList');
-const itemCount = document.getElementById('itemCount');
-const clearBtn = document.getElementById('clearBtn');
-const filterBtns = document.querySelectorAll('.filter');
+var input = document.getElementById('todoInput');
+var addBtn = document.getElementById('addBtn');
+var list = document.getElementById('todoList');
+var count = document.getElementById('itemCount');
+var clearBtn = document.getElementById('clearBtn');
+var filters = document.querySelectorAll('.filter');
 
-// ----- Core Functions -----
-function save() {
+function loadTasks() {
+    var saved = localStorage.getItem('todos');
+    if (saved) {
+        todos = JSON.parse(saved);
+    }
+}
+
+function saveTasks() {
     localStorage.setItem('todos', JSON.stringify(todos));
 }
 
-function addTodo() {
-    const text = todoInput.value.trim();
-    if (!text) return;
-
+function addTask() {
+    var text = input.value.trim();
+    if (text == '') {
+        return;
+    }
     todos.push({
         id: Date.now(),
-        text,
-        completed: false,
+        text: text,
+        done: false
     });
-
-    todoInput.value = '';
-    save();
-    render();
+    input.value = '';
+    saveTasks();
+    showTasks();
 }
 
-function deleteTodo(id) {
-    todos = todos.filter(t => t.id !== id);
-    save();
-    render();
+function deleteTask(id) {
+    var newTodos = [];
+    for (var i = 0; i < todos.length; i++) {
+        if (todos[i].id != id) {
+            newTodos.push(todos[i]);
+        }
+    }
+    todos = newTodos;
+    saveTasks();
+    showTasks();
 }
 
-function toggleTodo(id) {
-    todos = todos.find(t => t.id === id).completed ^= true;
-    save();
-    render();
+function toggleTask(id) {
+    for (var i = 0; i < todos.length; i++) {
+        if (todos[i].id == id) {
+            todos[i].done = !todos[i].done;
+            break;
+        }
+    }
+    saveTasks();
+    showTasks();
 }
 
-function clearCompleted() {
-    todos = todos.filter(t => !t.completed);
-    save();
-    render();
+function clearDone() {
+    var newTodos = [];
+    for (var i = 0; i < todos.length; i++) {
+        if (!todos[i].done) {
+            newTodos.push(todos[i]);
+        }
+    }
+    todos = newTodos;
+    saveTasks();
+    showTasks();
 }
 
-function setFilter(filter) {
-    currentFilter = filter;
-    filterBtns.forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.filter === filter);
-    });
-    render();
+function setFilter(f) {
+    filter = f;
+    for (var i = 0; i < filters.length; i++) {
+        if (filters[i].dataset.filter == f) {
+            filters[i].className = 'filter active';
+        } else {
+            filters[i].className = 'filter';
+        }
+    }
+    showTasks();
 }
 
-// ----- Render -----
-function render() {
-    const filtered = todos.filter(t => {
-        if (currentFilter === 'active') return !t.completed;
-        if (currentFilter === 'completed') return t.completed;
-        return true;
-    });
+function showTasks() {
+    var filtered = [];
+    for (var i = 0; i < todos.length; i++) {
+        if (filter == 'all') {
+            filtered.push(todos[i]);
+        } else if (filter == 'active' && !todos[i].done) {
+            filtered.push(todos[i]);
+        } else if (filter == 'completed' && todos[i].done) {
+            filtered.push(todos[i]);
+        }
+    }
 
-    if (filtered.length === 0) {
-        todoList.innerHTML = `<li class="empty-msg">✨ No tasks here — add one above!</li>`;
+    if (filtered.length == 0) {
+        list.innerHTML = '<li class="empty">No tasks here</li>';
     } else {
-        todoList.innerHTML = filtered.map(t => `
-            <li class="todo-item" data-id="${t.id}">
-                <input type="checkbox" class="todo-checkbox" ${t.completed ? 'checked' : ''} />
-                <span class="todo-text ${t.completed ? 'completed' : ''}">${escapeHtml(t.text)}</span>
-                <button class="todo-delete">✕</button>
-            </li>
-        `).join('');
+        var html = '';
+        for (var i = 0; i < filtered.length; i++) {
+            var t = filtered[i];
+            var cls = t.done ? 'done-text' : '';
+            var checked = t.done ? 'checked' : '';
+            html += '<li>';
+            html += '<input type="checkbox" class="cb" data-id="' + t.id + '" ' + checked + ' />';
+            html += '<span class="' + cls + '">' + t.text + '</span>';
+            html += '<button class="delete-btn" data-id="' + t.id + '">X</button>';
+            html += '</li>';
+        }
+        list.innerHTML = html;
     }
 
-    const activeCount = todos.filter(t => !t.completed).length;
-    itemCount.textContent = `${activeCount} item${activeCount !== 1 ? 's' : ''} left`;
+    var left = 0;
+    for (var i = 0; i < todos.length; i++) {
+        if (!todos[i].done) {
+            left++;
+        }
+    }
+    count.innerHTML = left + ' tasks left';
 
-    clearBtn.style.display = todos.some(t => t.completed) ? 'inline' : 'none';
+    var hasDone = false;
+    for (var i = 0; i < todos.length; i++) {
+        if (todos[i].done) {
+            hasDone = true;
+            break;
+        }
+    }
+    if (hasDone) {
+        clearBtn.style.display = 'inline';
+    } else {
+        clearBtn.style.display = 'none';
+    }
 }
 
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
+// Events
+addBtn.onclick = addTask;
+
+input.onkeydown = function(e) {
+    if (e.key == 'Enter') {
+        addTask();
+    }
+};
+
+clearBtn.onclick = clearDone;
+
+for (var i = 0; i < filters.length; i++) {
+    filters[i].onclick = function() {
+        setFilter(this.dataset.filter);
+    };
 }
 
-// ----- Event Delegation -----
-todoList.addEventListener('click', (e) => {
-    const li = e.target.closest('.todo-item');
-    if (!li) return;
-    const id = parseInt(li.dataset.id);
-
-    if (e.target.classList.contains('todo-delete')) {
-        deleteTodo(id);
+list.onclick = function(e) {
+    if (e.target.classList.contains('delete-btn')) {
+        deleteTask(parseInt(e.target.dataset.id));
     }
-});
+};
 
-todoList.addEventListener('change', (e) => {
-    if (e.target.classList.contains('todo-checkbox')) {
-        const li = e.target.closest('.todo-item');
-        const id = parseInt(li.dataset.id);
-        toggleTodo(id);
+list.onchange = function(e) {
+    if (e.target.classList.contains('cb')) {
+        toggleTask(parseInt(e.target.dataset.id));
     }
-});
+};
 
-// ----- Enter key -----
-todoInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') addTodo();
-});
-
-// ----- Button listeners -----
-addBtn.addEventListener('click', addTodo);
-clearBtn.addEventListener('click', clearCompleted);
-filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => setFilter(btn.dataset.filter));
-});
-
-// ----- Init -----
-render();
+// Start
+loadTasks();
+showTasks();
